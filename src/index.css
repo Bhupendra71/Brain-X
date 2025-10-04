@@ -1,5 +1,13 @@
-body {
-  margin: 0;
+/* src/index.css */
+html, body, #root { /* ADDED #root HERE */
+  margin: 0; 
+  padding: 0; 
+  /* Crucial: Ensure the root container is also 100% of the viewport height */
+  min-height: 100vh; 
+  width: 100%;
+}
+
+html, body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

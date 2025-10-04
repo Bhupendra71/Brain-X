@@ -6,9 +6,8 @@ html, body {
   height: 100%;
   overflow: hidden; 
   font-family: 'Poppins', sans-serif;
-  /* --- CHANGED --- */
-  background-color: #FFFFFF; /* Switched to a white background */
-  color: #212529; /* Default text color is now dark */
+  background-color: #FFFFFF;
+  color: #212529;
 }
 
 /* Main container to control layout and fill the screen */
@@ -19,7 +18,8 @@ html, body {
   justify-content: center;
   width: 100vw;
   min-height: 100vh;
-  padding: 20px;
+  /* Removed padding to ensure no gaps at the sides */
+  padding: 0; 
   box-sizing: border-box;
   padding-bottom: 10vh; 
 }
@@ -27,24 +27,29 @@ html, body {
 /* Header and Logo */
 .header {
   position: absolute;
-  top: 20px;
-  width: 100%;
-  max-width: 1200px; 
+  top: 0; /* Aligns with the very top edge */
+  width: 100%; /* Ensures it spans 100% of the viewport width */
+  /* max-width removed to enable full row coverage */
+  
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; 
   align-items: center;
-  padding: 0 30px;
+  padding: 20px 30px; /* Internal spacing */
   box-sizing: border-box;
+  
+  /* FINAL COLOR: Light Aqua Mint */
+  background-color: #ba9447f0; 
+  border-radius: 0; /* Removed rounding for edge-to-edge coverage */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  z-index: 10;
 }
 
 .logo {
- 
   font-size: 30px;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #0D2A4C;
-  /* --- ALTERNATIVE METHOD --- */
- 
+  color: #070008; /* Deep Teal/Aqua */
+
 }
 
 
@@ -55,10 +60,9 @@ html, body {
   right: 30px;
   width: 50px;
   height: 50px;
-  /* --- CHANGED --- */
-  background-color: #f8f9fa; /* Light background */
-  border: 1px solid #dee2e6; /* Light border */
-  color: #495057; /* Darker icon color */
+  background-color: #020407;
+  border: 1px solid #dee2e6;
+  color: #495057;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -69,10 +73,9 @@ html, body {
 }
 
 .night-mode-toggle:hover {
-  /* --- CHANGED --- */
-  background-color: #e9ecef; /* Slightly darker hover */
+  background-color: #e9ecef;
   transform: scale(1.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow for light theme */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Main Content Styling */
@@ -80,34 +83,32 @@ html, body {
   text-align: center;
   max-width: 700px;
   width: 100%;
+  /* Adjusted margin-top to push the content down below the full-width header (approx 60px height + extra space) */
+  margin-top: 100px; 
 }
 
 h1 {
   font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  /* --- CHANGED --- */
   color: #0D2A4C; /* Dark heading color */
 }
 
 .subtitle {
   font-size: 1.1rem;
-  /* --- CHANGED --- */
   color: #4A5568; /* Darker subtitle color */
   margin-bottom: 3rem;
 }
 
 /* Topic Selection Styling */
 .choose-topic-label {
-  /* --- CHANGED --- */
-  color: #007BFF; /* A vibrant blue for the label */
+  color: #007BFF;
   font-weight: 500;
   margin-bottom: 1rem;
 }
 .topic-buttons {
   display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
 }
-/* The colorful topic buttons look great on a white background, so they don't need changes */
 .topic-btn {
   padding: 12px 24px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -125,37 +126,33 @@ h1 {
 .or-divider { 
   display: block; 
   margin-bottom: 1rem; 
-  /* --- CHANGED --- */
-  color: #6c757d; /* Medium gray for the divider */
+  color: #6c757d;
 }
 .input-group { display: flex; justify-content: center; gap: 5px; align-items: center; }
 
-/* --- CHANGED: Input field styles for light theme --- */
+/* Input field styles for light theme */
 .input-group input {
   padding: 12px 20px; 
-  border: 1px solid #ced4da; /* Standard light theme border */
+  border: 1px solid #ced4da;
   border-radius: 6px 6px 6px 6px; 
-  background-color: #FFFFFF; /* White background */
-  color: #212529; /* Dark text color */
+  background-color: #FFFFFF;
+  color: #212529;
   font-size: 1rem; 
   width: 300px; 
   outline: none;
 }
 .input-group input::placeholder { 
-  color: #6c757d; /* Lighter placeholder text */
+  color: #6c757d;
 }
 
-/* The generate button gradient also works well, so no changes needed */
+/* Generate button styles */
 .generate-btn {
   padding: 12px 24px; border: none; border-radius: 6px 6px 6px 6px; background: linear-gradient(90deg, #00bcd4, #00e676); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; transition: filter 0.2s;
 }
 .generate-btn:hover { filter: brightness(1.1); }
 
 
-
-
-
-/* --- NEW: Dark Mode Overrides (Add to the bottom of HomeScreen.css) --- */
+/* --- Dark Mode Overrides --- */
 
 /* Dark Mode: General Body and Text */
 .dark-mode html,
@@ -166,14 +163,19 @@ h1 {
 
 /* Dark Mode: Main Container */
 .dark-mode .home-screen-container {
-    /* Set to a slightly lighter dark color for visual depth/card effect */
     background-color: #1e1e1e; 
+    padding: 0;
 }
 
 /* Dark Mode: Header and Headings */
+.dark-mode .header {
+  background-color: #2c2c2c;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
 .dark-mode .logo,
 .dark-mode h1 {
-    color: #f1f3f5; /* Bright white/light gray */
+    color: #f1f3f5;
 }
 
 /* Dark Mode: Subtitle and Dividers */
@@ -184,7 +186,6 @@ h1 {
 
 /* Dark Mode: Topic Buttons (Fixing the hover/shadow distortion) */
 .dark-mode .topic-btn:hover {
-    /* Use a darker shadow for better contrast */
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15); 
 }
 
@@ -200,11 +201,12 @@ h1 {
 
 /* Dark Mode: Night Mode Toggle Button */
 .dark-mode .night-mode-toggle {
-    background-color: #2c2c2c;
+    background-color: #fefdfd;
     color: #f1f3f5;
+    border-color: #555;
 }
 
 .dark-mode .night-mode-toggle:hover {
-    background-color: #3e3e3e;
+    background-color: #444;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }

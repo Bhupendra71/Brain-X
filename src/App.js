@@ -20,6 +20,9 @@ function App() {
   const [score, setScore] = useState(0);
   const [aiFeedback, setAiFeedback] = useState('');
 
+  // Constant for the minimum time to stay on the loader (3 seconds)
+  const MIN_LOADING_TIME = 2000000;
+
   // Function to reset everything for a new quiz
   const restartQuiz = () => {
     setGameState('home');
@@ -34,13 +37,31 @@ function App() {
   const handleStartQuiz = async (selectedTopic) => {
     setGameState('loading');
     setTopic(selectedTopic);
-    const fetchedQuestions = await fetchQuizQuestions(selectedTopic);
-    if (fetchedQuestions && fetchedQuestions.length > 0) {
-      setQuestions(fetchedQuestions);
-      setGameState('quiz');
-    } else {
-      alert("Sorry, couldn't generate questions. Please try again.");
-      restartQuiz();
+
+    // 1. Start the API call to fetch questions
+    const apiPromise = fetchQuizQuestions(selectedTopic);
+    
+    // 2. Start the minimum delay timer (3 seconds)
+    const delayPromise = new Promise(resolve => setTimeout(resolve, MIN_LOADING_TIME));
+
+    // 3. Wait for both the API call AND the timer to complete
+    try {
+        // Promise.all ensures both must resolve before proceeding.
+        // We only care about the first element (fetchedQuestions) from the array.
+        const [fetchedQuestions] = await Promise.all([apiPromise, delayPromise]);
+
+        if (fetchedQuestions && fetchedQuestions.length > 0) {
+            setQuestions(fetchedQuestions);
+            // Transition to quiz only after min time has passed
+            setGameState('quiz');
+        } else {
+            alert("Sorry, couldn't generate questions. Please try again.");
+            restartQuiz();
+        }
+    } catch (error) {
+        console.error("Quiz generation failed:", error);
+        alert("An error occurred during quiz generation. Please try again.");
+        restartQuiz();
     }
   };
 

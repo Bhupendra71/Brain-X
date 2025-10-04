@@ -1,15 +1,97 @@
 /* src/components/LoadingScreen.css */
-.loading-container { display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 100vw; height: 100vh; padding: 30px; box-sizing: border-box; background: linear-gradient(135deg, #74ebd5, #ACB6E5); color: white; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
-.loading-header, .loading-footer { width: 100%; }
-.loading-header { display: flex; justify-content: space-between; align-items: center; }
-.loading-logo { font-weight: bold; font-size: 1.5rem; }
-.loading-settings { font-size: 1.5rem; }
-.loading-content { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.brain-animation { font-size: 4rem; margin-bottom: 20px; animation: pulse 2s infinite ease-in-out; }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-.loading-content h1 { font-size: 2.5rem; margin-bottom: 10px; }
-.loading-content p { font-size: 1.1rem; max-width: 400px; margin-bottom: 30px; }
-.progress-bar { width: 300px; height: 8px; background-color: rgba(255, 255, 255, 0.3); border-radius: 4px; overflow: hidden; }
-.progress-bar-inner { width: 100%; height: 100%; background: linear-gradient(90deg, transparent, white, transparent); animation: slide 2s infinite linear; }
-@keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-.loading-footer { font-size: 0.9rem; opacity: 0.8; }
+.loading-container { 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+  align-items: center; 
+  width: 100%; 
+  height: 100%;
+  padding: 60px; 
+  box-sizing: border-box; 
+  /* UPDATED BACKGROUND: Light Creamy */
+  background: #fff6e7; 
+  /* UPDATED TEXT COLOR: Deep Brown for high contrast */
+  color: #5D4037; 
+  text-align: center; 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+}
+.loading-header, .loading-footer { 
+  width: 100%; 
+}
+.loading-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+   margin-top: 20px; 
+}
+.loading-logo { 
+  font-weight: bold; 
+  font-size: 1.5rem; 
+  /* Logo color set to Deep Brown */
+  color: #5D4037; 
+}
+
+.loading-content { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+}
+.loading-content h1 { 
+  font-size: 2.5rem; 
+  margin-bottom: 10px; 
+}
+.loading-content p { 
+  font-size: 1.1rem; 
+  max-width: 400px; 
+  margin-bottom: 30px; 
+}
+.loading-footer { 
+  font-size: 0.9rem; 
+  /* Slightly transparent deep brown */
+  color: rgba(93, 64, 55, 0.8); 
+}
+
+/* NEW LOADER STYLES (Bouncing Dots) - No change needed here for the dots themselves */
+.wrapper {
+  display: flex;
+  column-gap: 10px;
+  margin-bottom: 50px; 
+}
+
+.wrapper .dot {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  transform: translateZ(0); 
+  animation: animate 1s ease-in-out infinite alternate;
+}
+
+.dot:nth-child(1) {
+  background: #4285F4; /* Blue */
+  animation-delay: -0.25s;
+}
+
+.dot:nth-child(2) {
+  background: #EA4335; /* Red */
+  animation-delay: -0.5s;
+}
+
+.dot:nth-child(3) {
+  background: #FBBC05; /* Yellow */
+  animation-delay: -0.75s;
+}
+
+.dot:nth-child(4) {
+  background: #34A853; /* Green */
+  animation-delay: -1s;
+}
+
+@keyframes animate {
+  0% {
+    transform: translateY(-10px) translateZ(0); 
+  }
+  100% {
+    transform: translateY(5px) translateZ(0); 
+  }
+}
