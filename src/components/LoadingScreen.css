@@ -1,0 +1,15 @@
+/* src/components/LoadingScreen.css */
+.loading-container { display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 100vw; height: 100vh; padding: 30px; box-sizing: border-box; background: linear-gradient(135deg, #74ebd5, #ACB6E5); color: white; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+.loading-header, .loading-footer { width: 100%; }
+.loading-header { display: flex; justify-content: space-between; align-items: center; }
+.loading-logo { font-weight: bold; font-size: 1.5rem; }
+.loading-settings { font-size: 1.5rem; }
+.loading-content { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.brain-animation { font-size: 4rem; margin-bottom: 20px; animation: pulse 2s infinite ease-in-out; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+.loading-content h1 { font-size: 2.5rem; margin-bottom: 10px; }
+.loading-content p { font-size: 1.1rem; max-width: 400px; margin-bottom: 30px; }
+.progress-bar { width: 300px; height: 8px; background-color: rgba(255, 255, 255, 0.3); border-radius: 4px; overflow: hidden; }
+.progress-bar-inner { width: 100%; height: 100%; background: linear-gradient(90deg, transparent, white, transparent); animation: slide 2s infinite linear; }
+@keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.loading-footer { font-size: 0.9rem; opacity: 0.8; }
