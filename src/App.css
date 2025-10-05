@@ -13,16 +13,12 @@ body {
   box-sizing: border-box;
 }
 
-/* src/App.css */
-/* ... existing code ... */
-
-/* --- NEW: Global Dark Mode Styles --- */
+/* dark mode */
 body.dark-mode {
-  background-color: #121212; /* Very dark background */
-  color: #e0e0e0; /* Light text color for the entire app */
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
-/* Ensure the main container in Dark Mode has its color set to prevent conflicts */
 .dark-mode .App {
   background-color: #121212;
 }

@@ -1,4 +1,4 @@
-/* General Body and Background Styles */
+/* Basic setup */
 html, body {
   margin: 0;
   padding: 0;
@@ -10,7 +10,6 @@ html, body {
   color: #212529;
 }
 
-/* Main container to control layout and fill the screen */
 .home-screen-container {
   display: flex;
   flex-direction: column;
@@ -18,29 +17,23 @@ html, body {
   justify-content: center;
   width: 100vw;
   min-height: 100vh;
-  /* Removed padding to ensure no gaps at the sides */
   padding: 0; 
   box-sizing: border-box;
   padding-bottom: 10vh; 
 }
 
-/* Header and Logo */
+/* header section */
 .header {
   position: absolute;
-  top: 0; /* Aligns with the very top edge */
-  width: 100%; /* Ensures it spans 100% of the viewport width */
-  /* max-width removed to enable full row coverage */
-  
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: flex-start; 
   align-items: center;
-  padding: 20px 30px; /* Internal spacing */
+  padding: 20px 30px;
   box-sizing: border-box;
-  
-  /* FINAL COLOR: Light Aqua Mint */
   background-color: #9a7a38f0; 
-  border-radius: 0; /* Removed rounding for edge-to-edge coverage */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   z-index: 10;
 }
 
@@ -48,12 +41,10 @@ html, body {
   font-size: 30px;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #070008; /* Deep Teal/Aqua */
-
+  color: #070008;
 }
 
-
-/* Night mode button styled for a light theme */
+/* night mode button */
 .night-mode-toggle {
   position: fixed;
   bottom: 30px;
@@ -68,22 +59,14 @@ html, body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
   z-index: 1000;
 }
 
-.night-mode-toggle:hover {
-  background-color: #e9ecef;
-  transform: scale(1.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Main Content Styling */
+/* main content area */
 .main-content {
   text-align: center;
   max-width: 700px;
   width: 100%;
-  /* Adjusted margin-top to push the content down below the full-width header (approx 60px height + extra space) */
   margin-top: 100px; 
 }
 
@@ -91,86 +74,117 @@ h1 {
   font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #0D2A4C; /* Dark heading color */
+  color: #0D2A4C;
 }
 
 .subtitle {
   font-size: 1.1rem;
-  color: #4A5568; /* Darker subtitle color */
+  color: #4A5568;
   margin-bottom: 3rem;
 }
 
-/* Topic Selection Styling */
 .choose-topic-label {
   color: #007BFF;
   font-weight: 500;
   margin-bottom: 1rem;
 }
+
 .topic-buttons {
-  display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+  display: flex; 
+  justify-content: center; 
+  gap: 15px; 
+  flex-wrap: wrap;
 }
+
 .topic-btn {
-  padding: 12px 24px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+  padding: 12px 24px; 
+  border: none; 
+  border-radius: 8px; 
+  font-size: 1rem; 
+  font-weight: 500; 
+  cursor: pointer; 
 }
-.topic-btn:hover {
-  transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+.topic-btn.science { 
+  background-color: #3b82f6; 
+  color: white; 
 }
-.topic-btn.science { background-color: #3b82f6; color: white; }
-.topic-btn.history { background-color: #f59e0b; color: white; }
-.topic-btn.tech { background-color: #a855f7; color: white; }
-.topic-btn.wellness { background-color: #22c55e; color: white; }
 
+.topic-btn.history { 
+  background-color: #f59e0b; 
+  color: white; 
+}
 
-/* Custom Topic Input */
-.custom-topic-input { margin-top: 2rem; }
+.topic-btn.tech { 
+  background-color: #a855f7; 
+  color: white; 
+}
+
+.topic-btn.wellness { 
+  background-color: #22c55e; 
+  color: white; 
+}
+
+/* custom topic stuff */
+.custom-topic-input { 
+  margin-top: 2rem; 
+}
+
 .or-divider { 
   display: block; 
   margin-bottom: 1rem; 
   color: #6c757d;
 }
-.input-group { display: flex; justify-content: center; gap: 5px; align-items: center; }
 
-/* Input field styles for light theme */
+.input-group { 
+  display: flex; 
+  justify-content: center; 
+  gap: 5px; 
+  align-items: center; 
+}
+
 .input-group input {
   padding: 12px 20px; 
   border: 1px solid #ced4da;
-  border-radius: 6px 6px 6px 6px; 
+  border-radius: 6px; 
   background-color: #FFFFFF;
   color: #212529;
   font-size: 1rem; 
   width: 300px; 
   outline: none;
 }
+
 .input-group input::placeholder { 
   color: #6c757d;
 }
 
-/* Generate button styles */
+/* generate button */
 .generate-btn {
-  padding: 12px 24px; border: none; border-radius: 6px 6px 6px 6px; background: linear-gradient(90deg, #00bcd4, #00e676); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; transition: filter 0.2s;
+  padding: 12px 24px; 
+  border: none; 
+  border-radius: 6px; 
+  background: linear-gradient(90deg, #00bcd4, #00e676); 
+  color: white; 
+  font-size: 1rem; 
+  font-weight: 600; 
+  cursor: pointer; 
 }
-.generate-btn:hover { filter: brightness(1.1); }
 
-
-/* --- Dark Mode Overrides --- */
-
-/* Dark Mode: General Body and Text */
+/* dark mode styles */
 .dark-mode html,
 .dark-mode body {
   background-color: #121212;
   color: #e0e0e0;
 }
 
-/* Dark Mode: Main Container */
 .dark-mode .home-screen-container {
     background-color: #1e1e1e; 
     padding: 0;
 }
 
-/* Dark Mode: Header and Headings */
 .dark-mode .header {
   background-color: #2c2c2c;
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 5px rgba(255,255,255,0.1);
 }
 
 .dark-mode .logo,
@@ -178,35 +192,23 @@ h1 {
     color: #f1f3f5;
 }
 
-/* Dark Mode: Subtitle and Dividers */
 .dark-mode .subtitle,
 .dark-mode .or-divider {
     color: #B0B0B0;
 }
 
-/* Dark Mode: Topic Buttons (Fixing the hover/shadow distortion) */
-.dark-mode .topic-btn:hover {
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15); 
-}
-
-/* Dark Mode: Input Field */
 .dark-mode .input-group input {
     background-color: #2c2c2c;
     border-color: #3e3e3e;
     color: #e0e0e0;
 }
+
 .dark-mode .input-group input::placeholder { 
     color: #888;
 }
 
-/* Dark Mode: Night Mode Toggle Button */
 .dark-mode .night-mode-toggle {
     background-color: #fefdfd;
     color: #f1f3f5;
     border-color: #555;
-}
-
-.dark-mode .night-mode-toggle:hover {
-    background-color: #444;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }

@@ -1,4 +1,3 @@
-// src/components/ResultScreen.js
 import React from 'react';
 import './ResultScreen.css';
 

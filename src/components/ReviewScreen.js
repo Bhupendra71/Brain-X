@@ -1,4 +1,3 @@
-// src/components/ReviewScreen.js
 import React from 'react';
 import './ReviewScreen.css';
 
@@ -6,24 +5,19 @@ function ReviewScreen({ questions, userAnswers, onRestart }) {
   return (
     <div className="review-container">
       <h2>Review Your Answers</h2>
-      {questions.map((q, index) => {
-        const userAnswer = userAnswers[index];
-        const correctAnswer = q.correctAnswer;
-        const isCorrect = userAnswer === correctAnswer;
+      {questions.map((q, idx) => {
+        const userAns = userAnswers[idx];
+        const correct = q.correctAnswer;
 
         return (
-          <div key={index} className="review-question-card">
-            <p className="review-question-text">{index + 1}. {q.question}</p>
+          <div key={idx} className="review-question-card">
+            <p className="review-question-text">{idx + 1}. {q.question}</p>
             <div className="review-options">
-              {q.options.map((option, i) => {
-                let className = 'review-option';
-                if (option === correctAnswer) {
-                  className += ' correct';
-                }
-                if (option === userAnswer && !isCorrect) {
-                  className += ' incorrect';
-                }
-                return <div key={i} className={className}>{option}</div>;
+              {q.options.map((opt, i) => {
+                let cls = 'review-option';
+                if (opt === correct) cls = cls + ' correct';
+                if (opt === userAns && userAns !== correct) cls = cls + ' incorrect';
+                return <div key={i} className={cls}>{opt}</div>;
               })}
             </div>
           </div>

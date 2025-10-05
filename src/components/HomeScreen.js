@@ -1,60 +1,41 @@
-import React, { useState, useEffect, useRef } from 'react'; // <-- IMPORT useRef
+import React, { useState, useEffect, useRef } from 'react';
 import './HomeScreen.css';
 
 const HomeScreen = ({ onStartQuiz, isLoading }) => {
-  const [isNightMode, setIsNightMode] = useState(false);
-  // State for the custom topic input field (This will hold the topic text)
-  const [customTopic, setCustomTopic] = useState('');
-  
-  // Ref to directly access the Generate Quiz button DOM element
-  const generateButtonRef = useRef(null);
+  const [nightMode, setNightMode] = useState(false);
+  const [topic, setTopic] = useState('');
+  const btnRef = useRef(null);
 
-  // --- Night Mode Logic (Correct) ---
-  const toggleNightMode = () => {
-    setIsNightMode(prevMode => !prevMode);
+  const toggleMode = () => {
+    setNightMode(!nightMode);
   };
 
   useEffect(() => {
-    if (isNightMode) {
+    if (nightMode) {
       document.body.classList.add('dark-mode');
     } else {
       document.body.classList.remove('dark-mode');
     }
-  }, [isNightMode]);
+  }, [nightMode]);
 
-  // --- Topic & Generate Logic ---
-
-  // HANDLER: Function for the main "Generate Quiz" button (Manual Click)
-  const handleGenerateClick = () => {
-    const topicToUse = customTopic.trim();
-
-    if (topicToUse) {
-      // Calls the prop function to start the quiz, passing the topic
-      onStartQuiz(topicToUse);
+  const handleGenerate = () => {
+    const t = topic.trim();
+    if (t) {
+      onStartQuiz(t);
     } else {
-      // Using a simple alert, as per the existing code pattern
       alert("Please enter a topic to generate the quiz!");
     }
   };
 
-  // REVISED HANDLER: Function for topic buttons 
-  // ONLY sets the state, DOES NOT call onStartQuiz directly.
-  const handleTopicSelect = (topic) => {
-      // 1. Write the topic into the search bar (for visual confirmation)
-      setCustomTopic(topic); 
-      
-      // 2. STOP: Do NOT call onStartQuiz here. The user must now click the 'Generate Quiz' button.
+  const selectTopic = (t) => {
+    setTopic(t);
   };
 
-  // HANDLER: Function to handle the text input change
-  const handleCustomTopicChange = (e) => {
-      // Allow users to type, but the topic is always what's in the input field
-      setCustomTopic(e.target.value);
+  const handleInput = (e) => {
+    setTopic(e.target.value);
   };
 
-  // Determine if the 'Generate Quiz' button should be disabled
-  const isGenerateDisabled = isLoading || !customTopic.trim();
-
+  const btnDisabled = isLoading || !topic.trim();
 
   return (
     <div className="home-screen-container">
@@ -69,29 +50,27 @@ const HomeScreen = ({ onStartQuiz, isLoading }) => {
         <div className="topic-selector">
           <p className="choose-topic-label"><b>Choose a Topic</b></p>
           <div className="topic-buttons">
-            
-            {/* Topic Buttons now use the handleTopicSelect function */}
             <button 
-                className={`topic-btn science`}
-                onClick={() => handleTopicSelect('Science & Nature')}
+                className="topic-btn science"
+                onClick={() => selectTopic('Science & Nature')}
             >
                 Science & Nature
             </button>
             <button 
-                className={`topic-btn history`}
-                onClick={() => handleTopicSelect('History')}
+                className="topic-btn history"
+                onClick={() => selectTopic('History')}
             >
                 History
             </button>
             <button 
-                className={`topic-btn tech`}
-                onClick={() => handleTopicSelect('Tech Trends')}
+                className="topic-btn tech"
+                onClick={() => selectTopic('Tech Trends')}
             >
                 Tech Trends
             </button>
             <button 
-                className={`topic-btn wellness`}
-                onClick={() => handleTopicSelect('Wellness')}
+                className="topic-btn wellness"
+                onClick={() => selectTopic('Wellness')}
             >
                 Wellness
             </button>
@@ -101,19 +80,17 @@ const HomeScreen = ({ onStartQuiz, isLoading }) => {
         <div className="custom-topic-input">
           <span className="or-divider">Or</span>
           <div className="input-group">
-            {/* Input field with value and onChange handler */}
             <input 
                 type="text" 
                 placeholder="type any topic here..." 
-                value={customTopic}
-                onChange={handleCustomTopicChange}
+                value={topic}
+                onChange={handleInput}
             />
-            {/* Generate button: Attach the ref and the handler */}
             <button 
-                ref={generateButtonRef} 
+                ref={btnRef} 
                 className="generate-btn" 
-                onClick={handleGenerateClick} 
-                disabled={isGenerateDisabled}
+                onClick={handleGenerate} 
+                disabled={btnDisabled}
             >
                 {isLoading ? 'Loading...' : 'Generate Quiz'}
             </button>
@@ -121,8 +98,8 @@ const HomeScreen = ({ onStartQuiz, isLoading }) => {
         </div>
       </main>
 
-      <button className="night-mode-toggle" onClick={toggleNightMode}>
-        <span style={{ fontSize: '24px' }}>{isNightMode ? '☀️' : '🌙'}</span>
+      <button className="night-mode-toggle" onClick={toggleMode}>
+        <span style={{ fontSize: '24px' }}>{nightMode ? '☀️' : '🌙'}</span>
       </button>
     </div>
   );

@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import HomeScreen from './components/HomeScreen';
 import LoadingScreen from './components/LoadingScreen';
@@ -9,114 +8,82 @@ import { fetchQuizQuestions, fetchScoreFeedback } from './geminiService.js';
 import './App.css';
 
 function App() {
-  // State to manage the current view of the application
-  // 'home', 'loading', 'quiz', 'results', 'review'
-  const [gameState, setGameState] = useState('home');
-
-  // State for our quiz data
-  const [questions, setQuestions] = useState([]);
+  const [screen, setScreen] = useState('home');
+  const [ques, setQues] = useState([]);
   const [topic, setTopic] = useState('');
-  const [userAnswers, setUserAnswers] = useState([]);
+  const [ans, setAns] = useState([]);
   const [score, setScore] = useState(0);
-  const [aiFeedback, setAiFeedback] = useState('');
+  const [feedback, setFeedback] = useState('');
 
-  // Constant for the minimum time to stay on the loader (3 seconds)
-  const MIN_LOADING_TIME = 200;
-
-  // Function to reset everything for a new quiz
-  const restartQuiz = () => {
-    setGameState('home');
-    setQuestions([]);
+  const restart = () => {
+    setScreen('home');
+    setQues([]);
     setTopic('');
-    setUserAnswers([]);
+    setAns([]);
     setScore(0);
-    setAiFeedback('');
+    setFeedback('');
   };
 
-  // Function to start the quiz, called from HomeScreen
-  const handleStartQuiz = async (selectedTopic) => {
-    setGameState('loading');
-    setTopic(selectedTopic);
+  const startQuiz = async (t) => {
+    setScreen('loading');
+    setTopic(t);
 
-    // 1. Start the API call to fetch questions
-    const apiPromise = fetchQuizQuestions(selectedTopic);
-    
-    // 2. Start the minimum delay timer (3 seconds)
-    const delayPromise = new Promise(resolve => setTimeout(resolve, MIN_LOADING_TIME));
+    const apiCall = fetchQuizQuestions(t);
+    const delay = new Promise(resolve => setTimeout(resolve, 200));
 
-    // 3. Wait for both the API call AND the timer to complete
     try {
-        // Promise.all ensures both must resolve before proceeding.
-        // We only care about the first element (fetchedQuestions) from the array.
-        const [fetchedQuestions] = await Promise.all([apiPromise, delayPromise]);
+        const [data] = await Promise.all([apiCall, delay]);
 
-        if (fetchedQuestions && fetchedQuestions.length > 0) {
-            setQuestions(fetchedQuestions);
-            // Transition to quiz only after min time has passed
-            setGameState('quiz');
+        if (data && data.length > 0) {
+            setQues(data);
+            setScreen('quiz');
         } else {
             alert("Sorry, couldn't generate questions. Please try again.");
-            restartQuiz();
+            restart();
         }
-    } catch (error) {
-        console.error("Quiz generation failed:", error);
+    } catch (err) {
+        console.error("Quiz generation failed:", err);
         alert("An error occurred during quiz generation. Please try again.");
-        restartQuiz();
+        restart();
     }
   };
 
-  // This is a special hook that runs code only when gameState changes to 'results'
   useEffect(() => {
-    if (gameState === 'results') {
-      // Calculate score
-      let correctAnswers = 0;
-      questions.forEach((question, index) => {
-        if (question.correctAnswer === userAnswers[index]) {
-          correctAnswers++;
+    if (screen === 'results') {
+      let correct = 0;
+      for(let i=0; i<ques.length; i++){
+        if (ques[i].correctAnswer === ans[i]) {
+          correct++;
         }
+      }
+      setScore(correct);
+
+      fetchScoreFeedback(correct, ques.length, topic).then(fb => {
+        setFeedback(fb);
       });
-      setScore(correctAnswers);
-
-      // Fetch AI feedback after calculating score
-      const getFeedback = async () => {
-        const feedback = await fetchScoreFeedback(correctAnswers, questions.length, topic);
-        setAiFeedback(feedback);
-      };
-      getFeedback();
     }
-  }, [gameState, questions, userAnswers, topic]);
+  }, [screen, ques, ans, topic]);
 
-  // Function to handle the end of the quiz
-  const handleQuizComplete = (answers) => {
-    setUserAnswers(answers);
-    setGameState('results'); // This will trigger the useEffect above
+  const finishQuiz = (answers) => {
+    setAns(answers);
+    setScreen('results');
   };
 
-  // Function to switch to the review screen
-  const handleReview = () => {
-    setGameState('review');
+  const showReview = () => {
+    setScreen('review');
   };
 
-  // This function decides which component to show
-  const renderContent = () => {
-    switch (gameState) {
-      case 'loading':
-        return <LoadingScreen />;
-      case 'quiz':
-        return <QuizScreen questions={questions} topic={topic} onQuizComplete={handleQuizComplete} />;
-      case 'results':
-        return <ResultScreen score={score} totalQuestions={questions.length} aiFeedback={aiFeedback} onReview={handleReview} onRestart={restartQuiz} />;
-      case 'review':
-        return <ReviewScreen questions={questions} userAnswers={userAnswers} onRestart={restartQuiz} />;
-      case 'home':
-      default:
-        return <HomeScreen onStartQuiz={handleStartQuiz} isLoading={gameState === 'loading'} />;
-    }
+  const render = () => {
+    if(screen === 'loading') return <LoadingScreen />;
+    if(screen === 'quiz') return <QuizScreen questions={ques} topic={topic} onQuizComplete={finishQuiz} />;
+    if(screen === 'results') return <ResultScreen score={score} totalQuestions={ques.length} aiFeedback={feedback} onReview={showReview} onRestart={restart} />;
+    if(screen === 'review') return <ReviewScreen questions={ques} userAnswers={ans} onRestart={restart} />;
+    return <HomeScreen onStartQuiz={startQuiz} isLoading={screen === 'loading'} />;
   };
 
   return (
     <div className="App">
-      {renderContent()}
+      {render()}
     </div>
   );
 }
