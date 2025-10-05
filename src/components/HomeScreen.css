@@ -38,7 +38,7 @@ html, body {
   box-sizing: border-box;
   
   /* FINAL COLOR: Light Aqua Mint */
-  background-color: #ba9447f0; 
+  background-color: #9a7a38f0; 
   border-radius: 0; /* Removed rounding for edge-to-edge coverage */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   z-index: 10;

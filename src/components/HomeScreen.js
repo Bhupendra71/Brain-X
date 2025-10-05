@@ -63,8 +63,8 @@ const HomeScreen = ({ onStartQuiz, isLoading }) => {
       </header>
 
       <main className="main-content">
-        <h1>Challenge Your Knowledge, Powered by AI</h1>
-        <p className="subtitle">Select a topic or enter your own to start a custom quiz generated instantly.</p>
+        <h1>Your Personal AI-Powered Quiz Generator</h1>
+        <p className="subtitle">Your custom learning experience begins now.</p>
         
         <div className="topic-selector">
           <p className="choose-topic-label"><b>Choose a Topic</b></p>

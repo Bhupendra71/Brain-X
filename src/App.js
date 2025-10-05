@@ -21,7 +21,7 @@ function App() {
   const [aiFeedback, setAiFeedback] = useState('');
 
   // Constant for the minimum time to stay on the loader (3 seconds)
-  const MIN_LOADING_TIME = 2000000;
+  const MIN_LOADING_TIME = 200;
 
   // Function to reset everything for a new quiz
   const restartQuiz = () => {
