@@ -2,66 +2,69 @@ import React, { useState } from 'react';
 import './QuizScreen.css';
 
 function QuizScreen({ questions, topic, onQuizComplete }) {
-  const [idx, setIdx] = useState(0);
-  const [ans, setAns] = useState(Array(questions.length).fill(null));
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState(Array(questions.length).fill(null));
 
-  const selectAns = (opt) => {
-    const temp = [...ans];
-    temp[idx] = opt;
-    setAns(temp);
+  const handleSelectAnswer = (option) => {
+    const updatedAnswers = [...selectedAnswers];
+    updatedAnswers[currentQuestionIndex] = option;
+    setSelectedAnswers(updatedAnswers);
   };
 
-  const next = () => {
-    if (idx < questions.length - 1) {
-      setIdx(idx + 1);
+  const goToNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
 
-  const prev = () => {
-    if (idx > 0) {
-      setIdx(idx - 1);
+  const goToPreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
 
-  const q = questions[idx];
-  const isLast = idx === questions.length - 1;
-  const prog = ((idx + 1) / questions.length) * 100;
+  const currentQuestion = questions[currentQuestionIndex];
+  const isLastQuestion = currentQuestionIndex === questions.length - 1;
+  const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
     <div className="quiz-container">
       <div className="quiz-header">
         <h2 className="topic-title">{topic}</h2>
       </div>
+      
       <div className="progress-section">
-        <span>Progress: {idx + 1}/{questions.length}</span>
+        <span>Progress: {currentQuestionIndex + 1}/{questions.length}</span>
         <div className="progress-bar-container">
-          <div className="progress-bar-fill" style={{ width: `${prog}%` }}></div>
+          <div className="progress-bar-fill" style={{ width: `${progressPercentage}%` }}></div>
         </div>
       </div>
+      
       <div className="question-card">
-        <h3>Question {idx + 1}: {q.question}</h3>
+        <h3>Question {currentQuestionIndex + 1}: {currentQuestion.question}</h3>
         <div className="options-grid">
-          {q.options.map((opt, i) => (
+          {currentQuestion.options.map((option, optionIndex) => (
             <button 
-              key={i} 
-              className={`option-btn ${ans[idx] === opt ? 'selected' : ''}`} 
-              onClick={() => selectAns(opt)}
+              key={optionIndex} 
+              className={`option-btn ${selectedAnswers[currentQuestionIndex] === option ? 'selected' : ''}`} 
+              onClick={() => handleSelectAnswer(option)}
             >
-              {opt}
+              {option}
             </button>
           ))}
         </div>
       </div>
+      
       <div className="navigation-buttons">
-        <button onClick={prev} disabled={idx === 0}>
+        <button onClick={goToPreviousQuestion} disabled={currentQuestionIndex === 0}>
           &lt; Previous
         </button>
-        {isLast ? (
-          <button className="finish-btn" onClick={() => onQuizComplete(ans)}>
+        {isLastQuestion ? (
+          <button className="finish-btn" onClick={() => onQuizComplete(selectedAnswers)}>
             Finish Quiz
           </button>
         ) : (
-          <button onClick={next}>
+          <button onClick={goToNextQuestion}>
             Next &gt;
           </button>
         )}

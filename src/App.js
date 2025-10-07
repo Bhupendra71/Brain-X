@@ -8,82 +8,105 @@ import { fetchQuizQuestions, fetchScoreFeedback } from './geminiService.js';
 import './App.css';
 
 function App() {
-  const [screen, setScreen] = useState('home');
-  const [ques, setQues] = useState([]);
-  const [topic, setTopic] = useState('');
-  const [ans, setAns] = useState([]);
-  const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState('');
+  const [currentScreen, setCurrentScreen] = useState('home');
+  const [questions, setQuestions] = useState([]);
+  const [quizTopic, setQuizTopic] = useState('');
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [userScore, setUserScore] = useState(0);
+  const [aiFeedback, setAiFeedback] = useState('');
 
-  const restart = () => {
-    setScreen('home');
-    setQues([]);
-    setTopic('');
-    setAns([]);
-    setScore(0);
-    setFeedback('');
+  const handleRestart = () => {
+    setCurrentScreen('home');
+    setQuestions([]);
+    setQuizTopic('');
+    setUserAnswers([]);
+    setUserScore(0);
+    setAiFeedback('');
   };
 
-  const startQuiz = async (t) => {
-    setScreen('loading');
-    setTopic(t);
+  const handleStartQuiz = async (topic) => {
+    setCurrentScreen('loading');
+    setQuizTopic(topic);
 
-    const apiCall = fetchQuizQuestions(t);
-    const delay = new Promise(resolve => setTimeout(resolve, 200));
+    // adding a small delay so the loading screen doesn't flash too quick
+    const questionsPromise = fetchQuizQuestions(topic);
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 200));
 
     try {
-        const [data] = await Promise.all([apiCall, delay]);
+        const [questionsData] = await Promise.all([questionsPromise, minLoadingTime]);
 
-        if (data && data.length > 0) {
-            setQues(data);
-            setScreen('quiz');
+        if (questionsData && questionsData.length > 0) {
+            setQuestions(questionsData);
+            setCurrentScreen('quiz');
         } else {
             alert("Sorry, couldn't generate questions. Please try again.");
-            restart();
+            handleRestart();
         }
-    } catch (err) {
-        console.error("Quiz generation failed:", err);
+    } catch (error) {
+        console.error("Quiz generation failed:", error);
         alert("An error occurred during quiz generation. Please try again.");
-        restart();
+        handleRestart();
     }
   };
 
+  // calculate score after quiz finishes
   useEffect(() => {
-    if (screen === 'results') {
-      let correct = 0;
-      for(let i=0; i<ques.length; i++){
-        if (ques[i].correctAnswer === ans[i]) {
-          correct++;
+    if (currentScreen === 'results') {
+      let correctAnswersCount = 0;
+      
+      for (let i = 0; i < questions.length; i++) {
+        if (questions[i].correctAnswer === userAnswers[i]) {
+          correctAnswersCount++;
         }
       }
-      setScore(correct);
+      
+      setUserScore(correctAnswersCount);
 
-      fetchScoreFeedback(correct, ques.length, topic).then(fb => {
-        setFeedback(fb);
+      // get AI feedback based on score
+      fetchScoreFeedback(correctAnswersCount, questions.length, quizTopic).then(feedback => {
+        setAiFeedback(feedback);
       });
     }
-  }, [screen, ques, ans, topic]);
+  }, [currentScreen, questions, userAnswers, quizTopic]);
 
-  const finishQuiz = (answers) => {
-    setAns(answers);
-    setScreen('results');
+  const handleQuizComplete = (answers) => {
+    setUserAnswers(answers);
+    setCurrentScreen('results');
   };
 
-  const showReview = () => {
-    setScreen('review');
+  const handleShowReview = () => {
+    setCurrentScreen('review');
   };
 
-  const render = () => {
-    if(screen === 'loading') return <LoadingScreen />;
-    if(screen === 'quiz') return <QuizScreen questions={ques} topic={topic} onQuizComplete={finishQuiz} />;
-    if(screen === 'results') return <ResultScreen score={score} totalQuestions={ques.length} aiFeedback={feedback} onReview={showReview} onRestart={restart} />;
-    if(screen === 'review') return <ReviewScreen questions={ques} userAnswers={ans} onRestart={restart} />;
-    return <HomeScreen onStartQuiz={startQuiz} isLoading={screen === 'loading'} />;
+  const renderCurrentScreen = () => {
+    if (currentScreen === 'loading') return <LoadingScreen />;
+    
+    if (currentScreen === 'quiz') {
+      return <QuizScreen questions={questions} topic={quizTopic} onQuizComplete={handleQuizComplete} />;
+    }
+    
+    if (currentScreen === 'results') {
+      return (
+        <ResultScreen 
+          score={userScore} 
+          totalQuestions={questions.length} 
+          aiFeedback={aiFeedback} 
+          onReview={handleShowReview} 
+          onRestart={handleRestart} 
+        />
+      );
+    }
+    
+    if (currentScreen === 'review') {
+      return <ReviewScreen questions={questions} userAnswers={userAnswers} onRestart={handleRestart} />;
+    }
+    
+    return <HomeScreen onStartQuiz={handleStartQuiz} isLoading={currentScreen === 'loading'} />;
   };
 
   return (
     <div className="App">
-      {render()}
+      {renderCurrentScreen()}
     </div>
   );
 }

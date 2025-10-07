@@ -1,4 +1,3 @@
-// src/geminiService.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
@@ -34,27 +33,28 @@ Example:
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const text = response.text();
+    const rawText = response.text();
     
-    // clean up the response
-    const jsonText = text.replace(/```json/g, "").replace(/```/g, "").trim();
-    const questions = JSON.parse(jsonText);
+    // sometimes gemini wraps response in markdown code blocks, so removing that
+    const cleanedText = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
+    const parsedQuestions = JSON.parse(cleanedText);
     
-    // check if we got 5 questions
-    if (!Array.isArray(questions) || questions.length !== 5) {
-      throw new Error("Didn't get 5 questions");
+    // basic validation
+    if (!Array.isArray(parsedQuestions) || parsedQuestions.length !== 5) {
+      throw new Error("Invalid number of questions received");
     }
     
-    // make sure each question is valid
-    questions.forEach((q, index) => {
-      if (!q.question || !Array.isArray(q.options) || q.options.length !== 4 || !q.correctAnswer) {
-        throw new Error(`Question ${index} is missing something`);
+    // make sure each question has all required fields
+    parsedQuestions.forEach((question, index) => {
+      if (!question.question || !Array.isArray(question.options) || 
+          question.options.length !== 4 || !question.correctAnswer) {
+        throw new Error(`Question ${index + 1} is incomplete`);
       }
     });
     
-    return questions;
-  } catch (error) {
-    console.error("Error fetching quiz questions:", error);
+    return parsedQuestions;
+  } catch (err) {
+    console.error("Failed to fetch quiz questions:", err);
     return null;
   }
 }
@@ -76,8 +76,9 @@ Just return the message text, nothing else.`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     return response.text().trim();
-  } catch (error) {
-    console.error("Error fetching score feedback:", error);
+  } catch (err) {
+    console.error("Failed to generate feedback:", err);
+    // fallback message if API fails
     return "Good try! Review your answers and give it another shot to improve your score.";
   }
 }

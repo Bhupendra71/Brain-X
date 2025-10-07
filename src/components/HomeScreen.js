@@ -2,40 +2,40 @@ import React, { useState, useEffect, useRef } from 'react';
 import './HomeScreen.css';
 
 const HomeScreen = ({ onStartQuiz, isLoading }) => {
-  const [nightMode, setNightMode] = useState(false);
-  const [topic, setTopic] = useState('');
-  const btnRef = useRef(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [customTopic, setCustomTopic] = useState('');
+  const generateButtonRef = useRef(null);
 
-  const toggleMode = () => {
-    setNightMode(!nightMode);
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
   };
 
   useEffect(() => {
-    if (nightMode) {
+    if (isDarkMode) {
       document.body.classList.add('dark-mode');
     } else {
       document.body.classList.remove('dark-mode');
     }
-  }, [nightMode]);
+  }, [isDarkMode]);
 
-  const handleGenerate = () => {
-    const t = topic.trim();
-    if (t) {
-      onStartQuiz(t);
+  const handleGenerateQuiz = () => {
+    const topicText = customTopic.trim();
+    if (topicText) {
+      onStartQuiz(topicText);
     } else {
       alert("Please enter a topic to generate the quiz!");
     }
   };
 
-  const selectTopic = (t) => {
-    setTopic(t);
+  const handleTopicSelect = (selectedTopic) => {
+    setCustomTopic(selectedTopic);
   };
 
-  const handleInput = (e) => {
-    setTopic(e.target.value);
+  const handleTopicInput = (e) => {
+    setCustomTopic(e.target.value);
   };
 
-  const btnDisabled = isLoading || !topic.trim();
+  const isButtonDisabled = isLoading || !customTopic.trim();
 
   return (
     <div className="home-screen-container">
@@ -52,25 +52,25 @@ const HomeScreen = ({ onStartQuiz, isLoading }) => {
           <div className="topic-buttons">
             <button 
                 className="topic-btn science"
-                onClick={() => selectTopic('Science & Nature')}
+                onClick={() => handleTopicSelect('Science & Nature')}
             >
                 Science & Nature
             </button>
             <button 
                 className="topic-btn history"
-                onClick={() => selectTopic('History')}
+                onClick={() => handleTopicSelect('History')}
             >
                 History
             </button>
             <button 
                 className="topic-btn tech"
-                onClick={() => selectTopic('Tech Trends')}
+                onClick={() => handleTopicSelect('Tech Trends')}
             >
                 Tech Trends
             </button>
             <button 
                 className="topic-btn wellness"
-                onClick={() => selectTopic('Wellness')}
+                onClick={() => handleTopicSelect('Wellness')}
             >
                 Wellness
             </button>
@@ -83,14 +83,14 @@ const HomeScreen = ({ onStartQuiz, isLoading }) => {
             <input 
                 type="text" 
                 placeholder="type any topic here..." 
-                value={topic}
-                onChange={handleInput}
+                value={customTopic}
+                onChange={handleTopicInput}
             />
             <button 
-                ref={btnRef} 
+                ref={generateButtonRef} 
                 className="generate-btn" 
-                onClick={handleGenerate} 
-                disabled={btnDisabled}
+                onClick={handleGenerateQuiz} 
+                disabled={isButtonDisabled}
             >
                 {isLoading ? 'Loading...' : 'Generate Quiz'}
             </button>
@@ -98,8 +98,8 @@ const HomeScreen = ({ onStartQuiz, isLoading }) => {
         </div>
       </main>
 
-      <button className="night-mode-toggle" onClick={toggleMode}>
-        <span style={{ fontSize: '24px' }}>{nightMode ? '☀️' : '🌙'}</span>
+      <button className="night-mode-toggle" onClick={toggleDarkMode}>
+        <span style={{ fontSize: '24px' }}>{isDarkMode ? '☀️' : '🌙'}</span>
       </button>
     </div>
   );
