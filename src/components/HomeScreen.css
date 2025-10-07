@@ -33,6 +33,7 @@ html, body {
   font-size: 24px;
   font-weight: 600;
   color: #070008;
+    padding-left: 35px;
 }
 
 .night-mode-toggle {
