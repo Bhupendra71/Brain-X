@@ -6,7 +6,7 @@ An AI-powered quiz generator that creates custom multiple-choice questions on li
 
 ## Quick Start
 
-**Live version:** https://brain-x-e6kn.vercel.app/
+**Live version:** https://brain-x-ktrz.vercel.app/
 
 **To run locally:**
 
