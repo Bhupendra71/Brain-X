@@ -97,33 +97,33 @@ Home -> Loading -> Quiz -> Results -> Review-> back to Home page
 
 ```
 
-```
-Screenshots
-1. Home Screen - Topic Selection
-*Choose from preset topics or enter any custom topic*
-![Home Screen](./screenshots/1-home.png)
+---
 
+Screenshots
+
+1. Home Screen - Topic Selection
+   _Choose from preset topics or enter any custom topic_
+   ![Home Screen](./screenshots/1-home.png)
 
 2. Home Screen(dark mode)- topic selction
-*Choose from preset topics or enter any custom topic in dark mode*
-![Home Screen(dark mode)](./screenshots/1-home_dark.png)
+   _Choose from preset topics or enter any custom topic in dark mode_
+   ![Home Screen(dark mode)](./screenshots/1-home_dark.png)
 
 3. Loading Screen
-*Animated loading with bouncing dots while AI generates questions*
-![Loading Screen](./screenshots/2-loading.png)
+   _Animated loading with bouncing dots while AI generates questions_
+   ![Loading Screen](./screenshots/2-loading.png)
 
 4. Quiz Screen
-*Interactive quiz with progress bar and navigation buttons*
-![Quiz Screen](./screenshots/3-quiz.png)
+   _Interactive quiz with progress bar and navigation buttons_
+   ![Quiz Screen](./screenshots/3-quiz.png)
 
 5. Results Screen
-*Final score with personalized AI-generated feedback*
-![Results Screen](./screenshots/4-results.png)
+   _Final score with personalized AI-generated feedback_
+   ![Results Screen](./screenshots/4-results.png)
 
 6. Review Screen
-*Review all answers - green highlights correct, red shows incorrect*
-![Review Screen](./screenshots/5-review.png)
-```
+   _Review all answers - green highlights correct, red shows incorrect_
+   ![Review Screen](./screenshots/5-review.png)
 
 ---
 
