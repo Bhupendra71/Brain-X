@@ -1,10 +1,9 @@
-/* Basic setup */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; 
+  overflow-x: hidden;
   font-family: 'Poppins', sans-serif;
   background-color: #FFFFFF;
   color: #212529;
@@ -17,38 +16,29 @@ html, body {
   justify-content: center;
   width: 100vw;
   min-height: 100vh;
-  padding: 0; 
-  box-sizing: border-box;
   padding-bottom: 10vh; 
 }
 
-/* header section */
 .header {
   position: absolute;
   top: 0;
   width: 100%;
-  display: flex;
-  justify-content: flex-start; 
-  align-items: center;
-  padding: 20px 30px;
-  box-sizing: border-box;
+  padding: 15px 20px;
   background-color: #9a7a38f0; 
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   z-index: 10;
 }
 
 .logo {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: 1px;
   color: #070008;
 }
 
-/* night mode button */
 .night-mode-toggle {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
   width: 50px;
   height: 50px;
   background-color: #020407;
@@ -62,25 +52,25 @@ html, body {
   z-index: 1000;
 }
 
-/* main content area */
 .main-content {
   text-align: center;
   max-width: 700px;
-  width: 100%;
-  margin-top: 100px; 
+  width: 90%;
+  margin-top: 100px;
+  padding: 0 15px;
 }
 
 h1 {
-  font-size: 2.8rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
   color: #0D2A4C;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #4A5568;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .choose-topic-label {
@@ -92,40 +82,24 @@ h1 {
 .topic-buttons {
   display: flex; 
   justify-content: center; 
-  gap: 15px; 
+  gap: 10px; 
   flex-wrap: wrap;
 }
 
 .topic-btn {
-  padding: 12px 24px; 
+  padding: 10px 18px; 
   border: none; 
   border-radius: 8px; 
-  font-size: 1rem; 
+  font-size: 0.9rem; 
   font-weight: 500; 
-  cursor: pointer; 
+  cursor: pointer;
 }
 
-.topic-btn.science { 
-  background-color: #3b82f6; 
-  color: white; 
-}
+.topic-btn.science { background-color: #3b82f6; color: white; }
+.topic-btn.history { background-color: #f59e0b; color: white; }
+.topic-btn.tech { background-color: #a855f7; color: white; }
+.topic-btn.wellness { background-color: #22c55e; color: white; }
 
-.topic-btn.history { 
-  background-color: #f59e0b; 
-  color: white; 
-}
-
-.topic-btn.tech { 
-  background-color: #a855f7; 
-  color: white; 
-}
-
-.topic-btn.wellness { 
-  background-color: #22c55e; 
-  color: white; 
-}
-
-/* custom topic stuff */
 .custom-topic-input { 
   margin-top: 2rem; 
 }
@@ -140,17 +114,17 @@ h1 {
   display: flex; 
   justify-content: center; 
   gap: 5px; 
-  align-items: center; 
+  flex-wrap: wrap;
 }
 
 .input-group input {
-  padding: 12px 20px; 
+  padding: 12px 15px; 
   border: 1px solid #ced4da;
   border-radius: 6px; 
   background-color: #FFFFFF;
   color: #212529;
-  font-size: 1rem; 
-  width: 300px; 
+  font-size: 0.9rem; 
+  width: 250px;
   outline: none;
 }
 
@@ -158,28 +132,24 @@ h1 {
   color: #6c757d;
 }
 
-/* generate button */
 .generate-btn {
-  padding: 12px 24px; 
+  padding: 12px 20px; 
   border: none; 
   border-radius: 6px; 
   background: linear-gradient(90deg, #00bcd4, #00e676); 
   color: white; 
-  font-size: 1rem; 
+  font-size: 0.9rem; 
   font-weight: 600; 
-  cursor: pointer; 
+  cursor: pointer;
 }
 
-/* dark mode styles */
-.dark-mode html,
-.dark-mode body {
+.dark-mode html, .dark-mode body {
   background-color: #121212;
   color: #e0e0e0;
 }
 
 .dark-mode .home-screen-container {
-    background-color: #1e1e1e; 
-    padding: 0;
+  background-color: #1e1e1e; 
 }
 
 .dark-mode .header {
@@ -187,28 +157,40 @@ h1 {
   box-shadow: 0 2px 5px rgba(255,255,255,0.1);
 }
 
-.dark-mode .logo,
-.dark-mode h1 {
-    color: #f1f3f5;
+.dark-mode .logo, .dark-mode h1 {
+  color: #f1f3f5;
 }
 
-.dark-mode .subtitle,
-.dark-mode .or-divider {
-    color: #B0B0B0;
+.dark-mode .subtitle, .dark-mode .or-divider {
+  color: #B0B0B0;
 }
 
 .dark-mode .input-group input {
-    background-color: #2c2c2c;
-    border-color: #3e3e3e;
-    color: #e0e0e0;
+  background-color: #2c2c2c;
+  border-color: #3e3e3e;
+  color: #e0e0e0;
 }
 
 .dark-mode .input-group input::placeholder { 
-    color: #888;
+  color: #888;
 }
 
 .dark-mode .night-mode-toggle {
-    background-color: #fefdfd;
-    color: #f1f3f5;
-    border-color: #555;
+  background-color: #fefdfd;
+  color: #f1f3f5;
+  border-color: #555;
+}
+
+@media (max-width: 768px) {
+  .logo { font-size: 20px; }
+  .main-content { margin-top: 80px; width: 95%; }
+  h1 { font-size: 1.5rem; }
+  .subtitle { font-size: 0.9rem; }
+  .topic-btn { padding: 8px 14px; font-size: 0.85rem; }
+  
+  .input-group { flex-direction: column; gap: 10px; }
+  .input-group input { width: 100%; }
+  .generate-btn { width: 100%; }
+  
+  .night-mode-toggle { width: 45px; height: 45px; }
 }

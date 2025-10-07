@@ -1,8 +1,6 @@
-/* src/index.css */
-html, body, #root { /* ADDED #root HERE */
+html, body, #root {
   margin: 0; 
   padding: 0; 
-  /* Crucial: Ensure the root container is also 100% of the viewport height */
   min-height: 100vh; 
   width: 100%;
 }
@@ -16,6 +14,5 @@ html, body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

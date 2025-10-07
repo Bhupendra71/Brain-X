@@ -1,18 +1,17 @@
-/* src/components/ResultScreen.css */
 .result-container { 
-  width: 100%; 
+  width: 90%; 
   max-width: 600px; 
-  padding: 40px; 
+  padding: 30px; 
   background-color: #ffffff; 
   border-radius: 12px; 
   box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
-  text-align: center; 
+  text-align: center;
 }
 
 .result-container h2 { 
-  font-size: 2.5rem; 
+  font-size: 2rem; 
   color: #333; 
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .score-display { 
@@ -20,18 +19,18 @@
 }
 
 .score-display p { 
-  font-size: 1.2rem; 
+  font-size: 1.1rem; 
   color: #666; 
 }
 
 .score { 
-  font-size: 4rem; 
+  font-size: 3.5rem; 
   font-weight: bold; 
   color: #73da29; 
 }
 
 .total { 
-  font-size: 2rem; 
+  font-size: 1.8rem; 
   color: #aaa; 
 }
 
@@ -40,7 +39,7 @@
   border-left: 5px solid #73da29; 
   padding: 20px; 
   margin-bottom: 30px; 
-  text-align: left; 
+  text-align: left;
 }
 
 .feedback-title { 
@@ -61,11 +60,12 @@
 .result-actions { 
   display: flex; 
   justify-content: center; 
-  gap: 20px; 
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .result-actions button { 
-  padding: 12px 30px; 
+  padding: 12px 25px; 
   font-size: 1rem; 
   border-radius: 8px; 
   border: none; 
@@ -81,4 +81,13 @@
 .restart-btn { 
   background-color: #73da29; 
   color: white; 
+}
+
+@media (max-width: 768px) {
+  .result-container { width: 95%; padding: 20px; }
+  .result-container h2 { font-size: 1.6rem; }
+  .score { font-size: 2.8rem; }
+  .total { font-size: 1.5rem; }
+  .ai-feedback { padding: 15px; }
+  .result-actions button { padding: 10px 20px; font-size: 0.9rem; }
 }
