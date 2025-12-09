@@ -163,7 +163,7 @@ Beyond the basic requirements, I added:
 ## Tech Stack
 
 - React 19.2.0
-- Google Gemini AI (gemini-2.0-flash model)
+- Google Gemini AI (gemini-2.5-flash model)
 - Plain CSS (no frameworks)
 - Deployed on Vercel
 
